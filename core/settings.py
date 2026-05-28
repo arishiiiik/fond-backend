@@ -2,6 +2,11 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# Cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -20,6 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -28,7 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Для статики
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,7 +64,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database - для Render PostgreSQL, для локальной разработки SQLite
+# Database
 DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
@@ -79,14 +86,20 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# Cloudinary настройки
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'da5fy4q8i'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '873245894789337'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', '**********'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
