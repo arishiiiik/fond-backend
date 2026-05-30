@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 # ========== ПРОЕКТЫ ==========
@@ -234,7 +235,22 @@ class VolunteerRequest(models.Model):
     def __str__(self):
         return f"{self.name} - {self.city}"
     
-from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(is_superuser=True).exists():
     User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+
+class HeroSlide(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    text = models.TextField(verbose_name="Текст")
+    button_text = models.CharField(max_length=100, default="Узнать о проектах", verbose_name="Текст кнопки")
+    button_link = models.CharField(max_length=200, default="/projects", verbose_name="Ссылка кнопки")
+    bg_image = models.ImageField(upload_to="hero/", blank=True, null=True, verbose_name="Фоновое изображение")
+    order = models.IntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Слайд героя"
+        verbose_name_plural = "Слайды героя"
+
+    def __str__(self):
+        return self.title
