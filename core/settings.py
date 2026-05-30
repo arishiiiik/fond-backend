@@ -2,11 +2,6 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Cloudinary
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -25,8 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
-    'cloudinary',
+    # 'cloudinary_storage',  # Временно отключаем
+    # 'cloudinary',          # Временно отключаем
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -65,12 +60,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-#         conn_max_age=600
-#     )
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -97,13 +86,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cloudinary настройки
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'da5fy4q8i'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '873245894789337'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', '**********'),
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Media files (локальное хранение)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
