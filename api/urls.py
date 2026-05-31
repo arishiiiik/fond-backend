@@ -23,4 +23,5 @@ router.register(r'volunteer-requests', views.VolunteerRequestViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('media/<path:path>', views.serve_media, name='serve_media'),
 ]
