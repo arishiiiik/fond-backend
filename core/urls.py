@@ -11,5 +11,4 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-# ОТДАЁМ МЕДИА-ФАЙЛЫ ДАЖЕ В ПРОДАКШЕНЕ
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
