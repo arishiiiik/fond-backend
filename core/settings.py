@@ -67,6 +67,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Media URL (для ссылок)
 MEDIA_URL = '/media/'  # Cloudinary будет подставлять свои URL
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
