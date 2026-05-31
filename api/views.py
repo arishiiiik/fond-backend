@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.http import FileResponse, Http404
 from rest_framework.decorators import api_view
 import os
-from django.conf import setting
+from django.conf import settings
 from .models import (
     Project, TeamMember, Document, HomePage,
     Direction, News, FondPage, HistoryItem, Contact,
