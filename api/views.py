@@ -1,6 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from django.http import FileResponse, Http404
+from rest_framework.decorators import api_view
+import os
+from django.conf import settings
 from .models import (
     Project, TeamMember, Document, HomePage,
     Direction, News, FondPage, HistoryItem, Contact,
@@ -124,3 +128,16 @@ class VolunteerRequestViewSet(viewsets.ModelViewSet):
     serializer_class = VolunteerRequestSerializer
     permission_classes = [AllowAny]
 
+@api_view(['GET'])
+def serve_media(request, path):
+    """Временный эндпоинт для отдачи медиа-файлов."""
+    file_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(file_path):
+        response = FileResponse(open(file_path, 'rb'))
+        # Простая проверка на тип файла для правильного Content-Type
+        if path.endswith('.png'):
+            response['Content-Type'] = 'image/png'
+        elif path.endswith('.jpg') or path.endswith('.jpeg'):
+            response['Content-Type'] = 'image/jpeg'
+        return response
+    raise Http404()
