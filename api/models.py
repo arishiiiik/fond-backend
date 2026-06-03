@@ -26,6 +26,10 @@ class Project(models.Model):
     image = models.ImageField(
         upload_to="projects/", null=True, blank=True, verbose_name="Изображение"
     )
+    image_url = models.URLField(
+        max_length=500, blank=True, null=True, 
+        verbose_name="URL изображения (внешняя ссылка)"
+    )
     order = models.IntegerField(default=0, verbose_name="Порядок")
 
     class Meta:
@@ -42,6 +46,7 @@ class ProjectGallery(models.Model):
         Project, on_delete=models.CASCADE, related_name="gallery"
     )
     image = models.ImageField(upload_to="projects/gallery/")
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     order = models.IntegerField(default=0)
 
     class Meta:
@@ -56,6 +61,7 @@ class TeamMember(models.Model):
     phone = models.CharField(max_length=50, blank=True)
     vk_url = models.URLField(blank=True)
     photo = models.ImageField(upload_to="team/", null=True, blank=True)
+    photo_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL фото")
     order = models.IntegerField(default=0)
 
     class Meta:
@@ -92,6 +98,7 @@ class Direction(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.ImageField(upload_to="directions/", blank=True, null=True)
+    icon_url = models.URLField(max_length=500, blank=True, null=True)
     order = models.IntegerField(default=0)
 
     class Meta:
@@ -103,6 +110,7 @@ class News(models.Model):
     description = models.TextField()
     date = models.DateField()
     image = models.ImageField(upload_to="news/", blank=True, null=True)
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     link = models.URLField(blank=True)
     order = models.IntegerField(default=0)
 
@@ -114,6 +122,7 @@ class News(models.Model):
 class FondPage(models.Model):
     about_text = models.TextField()
     about_image = models.ImageField(upload_to="fond/", blank=True, null=True)
+    about_image_url = models.URLField(max_length=500, blank=True, null=True)
 
     class Meta:
         verbose_name = "О фонде"
@@ -162,6 +171,7 @@ class HelpCard(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.ImageField(upload_to="help/", blank=True, null=True)
+    icon_url = models.URLField(max_length=500, blank=True, null=True)
     button_text = models.CharField(max_length=100, default="Поддержать")
     button_type = models.CharField(max_length=50, default="donation")
     order = models.IntegerField(default=0)
@@ -169,14 +179,13 @@ class HelpCard(models.Model):
     class Meta:
         ordering = ["order"]
 
-    # models.py
-
 
 class Partner(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название")
     logo = models.ImageField(
         upload_to="partners/", blank=True, null=True, verbose_name="Логотип"
     )
+    logo_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL логотипа")
     link = models.URLField(blank=True, verbose_name="Сайт")
     order = models.IntegerField(default=0, verbose_name="Порядок")
 
@@ -184,6 +193,8 @@ class Partner(models.Model):
         ordering = ["order"]
         verbose_name = "Партнер"
         verbose_name_plural = "Партнеры"
+
+
 class DonationRequest(models.Model):
     """Заявка на пожертвование"""
     name = models.CharField(max_length=200, verbose_name="Имя")
@@ -234,10 +245,7 @@ class VolunteerRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.city}"
-    
-User = get_user_model()
-if not User.objects.filter(is_superuser=True).exists():
-    User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+
 
 class HeroSlide(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок")
@@ -245,6 +253,7 @@ class HeroSlide(models.Model):
     button_text = models.CharField(max_length=100, default="Узнать о проектах", verbose_name="Текст кнопки")
     button_link = models.CharField(max_length=200, default="/projects", verbose_name="Ссылка кнопки")
     bg_image = models.ImageField(upload_to="hero/", blank=True, null=True, verbose_name="Фоновое изображение")
+    bg_image_url = models.URLField(max_length=500, blank=True, null=True)
     order = models.IntegerField(default=0, verbose_name="Порядок")
 
     class Meta:

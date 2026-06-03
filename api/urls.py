@@ -16,10 +16,10 @@ router.register(r'contacts', views.ContactViewSet)
 router.register(r'help-section', views.HelpSectionViewSet)
 router.register(r'help-cards', views.HelpCardViewSet)
 router.register(r'partners', views.PartnerViewSet)
-# ↓↓↓ ДОБАВЬТЕ ЭТИ ТРИ СТРОКИ ↓↓↓
 router.register(r'donation-requests', views.DonationRequestViewSet)
 router.register(r'partner-requests', views.PartnerRequestViewSet)
 router.register(r'volunteer-requests', views.VolunteerRequestViewSet)
+router.register(r'hero-slides', views.HeroSlideViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

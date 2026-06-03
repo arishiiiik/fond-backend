@@ -9,14 +9,15 @@ from .models import (
     Project, TeamMember, Document, HomePage,
     Direction, News, FondPage, HistoryItem, Contact,
     HelpSection, HelpCard, Partner,
-    DonationRequest, PartnerRequest, VolunteerRequest  # ← ДОБАВЬТЕ ЭТИ МОДЕЛИ
+    DonationRequest, PartnerRequest, VolunteerRequest, HeroSlide
 )
 from .serializers import (
     ProjectSerializer, TeamMemberSerializer, DocumentSerializer,
     HomePageSerializer, DirectionSerializer, NewsSerializer,
     FondPageSerializer, HistoryItemSerializer, ContactSerializer,
     HelpSectionSerializer, HelpCardSerializer, PartnerSerializer,
-    DonationRequestSerializer, PartnerRequestSerializer, VolunteerRequestSerializer
+    DonationRequestSerializer, PartnerRequestSerializer, 
+    VolunteerRequestSerializer, HeroSlideSerializer
 )
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -29,19 +30,19 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class TeamMemberViewSet(viewsets.ModelViewSet):
     queryset = TeamMember.objects.all()
     serializer_class = TeamMemberSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class HomePageViewSet(viewsets.ModelViewSet):
     queryset = HomePage.objects.all()
     serializer_class = HomePageSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -54,19 +55,19 @@ class HomePageViewSet(viewsets.ModelViewSet):
 class DirectionViewSet(viewsets.ModelViewSet):
     queryset = Direction.objects.all()
     serializer_class = DirectionSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class FondPageViewSet(viewsets.ModelViewSet):
     queryset = FondPage.objects.all()
     serializer_class = FondPageSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -79,19 +80,19 @@ class FondPageViewSet(viewsets.ModelViewSet):
 class HistoryItemViewSet(viewsets.ModelViewSet):
     queryset = HistoryItem.objects.all()
     serializer_class = HistoryItemSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
 
 class HelpSectionViewSet(viewsets.ModelViewSet):
     queryset = HelpSection.objects.all()
     serializer_class = HelpSectionSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -104,12 +105,14 @@ class HelpSectionViewSet(viewsets.ModelViewSet):
 class HelpCardViewSet(viewsets.ModelViewSet):
     queryset = HelpCard.objects.all()
     serializer_class = HelpCardSerializer
-    permission_classes = [AllowAny]  # ← вернули обратно
+    permission_classes = [AllowAny]
+
 
 class PartnerViewSet(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
     permission_classes = [AllowAny]
+
 
 class DonationRequestViewSet(viewsets.ModelViewSet):
     queryset = DonationRequest.objects.all()
@@ -128,13 +131,19 @@ class VolunteerRequestViewSet(viewsets.ModelViewSet):
     serializer_class = VolunteerRequestSerializer
     permission_classes = [AllowAny]
 
+
+class HeroSlideViewSet(viewsets.ModelViewSet):
+    queryset = HeroSlide.objects.all()
+    serializer_class = HeroSlideSerializer
+    permission_classes = [AllowAny]
+
+
 @api_view(['GET'])
 def serve_media(request, path):
     """Временный эндпоинт для отдачи медиа-файлов."""
     file_path = os.path.join(settings.MEDIA_ROOT, path)
     if os.path.exists(file_path):
         response = FileResponse(open(file_path, 'rb'))
-        # Простая проверка на тип файла для правильного Content-Type
         if path.endswith('.png'):
             response['Content-Type'] = 'image/png'
         elif path.endswith('.jpg') or path.endswith('.jpeg'):

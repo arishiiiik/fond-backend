@@ -57,11 +57,16 @@ TEMPLATES = [
     },
 ]
 
-# Cloudinary настройки
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'da5fy4q8i'),
+#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '873245894789337'),
+#     'API_SECRET': os.environ.get('EfTjBGbGeKzFxoa4mBEgXAM0EyQ')
+# }
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'da5fy4q8i'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '873245894789337'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),   
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),         
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),   
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

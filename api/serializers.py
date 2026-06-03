@@ -3,7 +3,7 @@ from .models import (
     Project, ProjectGallery, TeamMember, Document,
     HomePage, Direction, News, FondPage, HistoryItem, Contact,
     HelpSection, HelpCard, Partner,
-    DonationRequest, PartnerRequest, VolunteerRequest
+    DonationRequest, PartnerRequest, VolunteerRequest, HeroSlide
 )
 
 
@@ -15,7 +15,9 @@ class PartnerSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_logo_url(self, obj):
-        return obj.logo.url if obj.logo else None
+        if obj.logo and hasattr(obj.logo, 'url') and obj.logo.url:
+            return obj.logo.url
+        return obj.logo_url or None
 
 
 class ProjectGallerySerializer(serializers.ModelSerializer):
@@ -26,7 +28,9 @@ class ProjectGallerySerializer(serializers.ModelSerializer):
         fields = ['id', 'image_url', 'order']
     
     def get_image_url(self, obj):
-        return obj.image.url if obj.image else None
+        if obj.image and hasattr(obj.image, 'url') and obj.image.url:
+            return obj.image.url
+        return obj.image_url or None
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -39,7 +43,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_image_url(self, obj):
-        return obj.image.url if obj.image else None
+        if obj.image and hasattr(obj.image, 'url') and obj.image.url:
+            return obj.image.url
+        return obj.image_url or None
 
 
 class TeamMemberSerializer(serializers.ModelSerializer):
@@ -50,7 +56,9 @@ class TeamMemberSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_photo_url(self, obj):
-        return obj.photo.url if obj.photo else None
+        if obj.photo and hasattr(obj.photo, 'url') and obj.photo.url:
+            return obj.photo.url
+        return obj.photo_url or None
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -78,7 +86,9 @@ class DirectionSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_icon_url(self, obj):
-        return obj.icon.url if obj.icon else None
+        if obj.icon and hasattr(obj.icon, 'url') and obj.icon.url:
+            return obj.icon.url
+        return obj.icon_url or None
 
 
 class NewsSerializer(serializers.ModelSerializer):
@@ -89,13 +99,22 @@ class NewsSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_image_url(self, obj):
-        return obj.image.url if obj.image else None
+        if obj.image and hasattr(obj.image, 'url') and obj.image.url:
+            return obj.image.url
+        return obj.image_url or None
 
 
 class FondPageSerializer(serializers.ModelSerializer):
+    about_image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = FondPage
         fields = '__all__'
+    
+    def get_about_image_url(self, obj):
+        if obj.about_image and hasattr(obj.about_image, 'url') and obj.about_image.url:
+            return obj.about_image.url
+        return obj.about_image_url or None
 
 
 class HistoryItemSerializer(serializers.ModelSerializer):
@@ -124,7 +143,9 @@ class HelpCardSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_icon_url(self, obj):
-        return obj.icon.url if obj.icon else None
+        if obj.icon and hasattr(obj.icon, 'url') and obj.icon.url:
+            return obj.icon.url
+        return obj.icon_url or None
 
 
 class DonationRequestSerializer(serializers.ModelSerializer):
@@ -143,3 +164,16 @@ class VolunteerRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = VolunteerRequest
         fields = '__all__'
+
+
+class HeroSlideSerializer(serializers.ModelSerializer):
+    bg_image_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = HeroSlide
+        fields = '__all__'
+    
+    def get_bg_image_url(self, obj):
+        if obj.bg_image and hasattr(obj.bg_image, 'url') and obj.bg_image.url:
+            return obj.bg_image.url
+        return obj.bg_image_url or None
