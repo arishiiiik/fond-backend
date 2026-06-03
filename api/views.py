@@ -9,39 +9,39 @@ from .models import (
     Project, TeamMember, Document, HomePage,
     Direction, News, FondPage, HistoryItem, Contact,
     HelpSection, HelpCard, Partner,
-    DonationRequest, PartnerRequest, VolunteerRequest, HeroSlide
+    DonationRequest, PartnerRequest, VolunteerRequest
 )
 from .serializers import (
     ProjectSerializer, TeamMemberSerializer, DocumentSerializer,
     HomePageSerializer, DirectionSerializer, NewsSerializer,
     FondPageSerializer, HistoryItemSerializer, ContactSerializer,
     HelpSectionSerializer, HelpCardSerializer, PartnerSerializer,
-    DonationRequestSerializer, PartnerRequestSerializer, 
-    VolunteerRequestSerializer, HeroSlideSerializer
+    DonationRequestSerializer, PartnerRequestSerializer, VolunteerRequestSerializer
 )
 
+
 class ProjectViewSet(viewsets.ModelViewSet):
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['request'] = self.request
-        return context
+    queryset = Project.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = ProjectSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
+    permission_classes = [AllowAny]
+    lookup_field = "slug"
 
 
 class TeamMemberViewSet(viewsets.ModelViewSet):
-    queryset = TeamMember.objects.all()
-    serializer_class = TeamMemberSerializer
+    queryset = TeamMember.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = TeamMemberSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
-    queryset = Document.objects.all()
-    serializer_class = DocumentSerializer
+    queryset = Document.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = DocumentSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class HomePageViewSet(viewsets.ModelViewSet):
-    queryset = HomePage.objects.all()
-    serializer_class = HomePageSerializer
+    queryset = HomePage.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = HomePageSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
@@ -53,20 +53,20 @@ class HomePageViewSet(viewsets.ModelViewSet):
 
 
 class DirectionViewSet(viewsets.ModelViewSet):
-    queryset = Direction.objects.all()
-    serializer_class = DirectionSerializer
+    queryset = Direction.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = DirectionSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class NewsViewSet(viewsets.ModelViewSet):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
+    queryset = News.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = NewsSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class FondPageViewSet(viewsets.ModelViewSet):
-    queryset = FondPage.objects.all()
-    serializer_class = FondPageSerializer
+    queryset = FondPage.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = FondPageSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
@@ -78,20 +78,20 @@ class FondPageViewSet(viewsets.ModelViewSet):
 
 
 class HistoryItemViewSet(viewsets.ModelViewSet):
-    queryset = HistoryItem.objects.all()
-    serializer_class = HistoryItemSerializer
+    queryset = HistoryItem.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = HistoryItemSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class ContactViewSet(viewsets.ModelViewSet):
-    queryset = Contact.objects.all()
-    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = ContactSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class HelpSectionViewSet(viewsets.ModelViewSet):
-    queryset = HelpSection.objects.all()
-    serializer_class = HelpSectionSerializer
+    queryset = HelpSection.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = HelpSectionSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
@@ -103,38 +103,32 @@ class HelpSectionViewSet(viewsets.ModelViewSet):
 
 
 class HelpCardViewSet(viewsets.ModelViewSet):
-    queryset = HelpCard.objects.all()
-    serializer_class = HelpCardSerializer
+    queryset = HelpCard.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = HelpCardSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class PartnerViewSet(viewsets.ModelViewSet):
-    queryset = Partner.objects.all()
-    serializer_class = PartnerSerializer
+    queryset = Partner.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = PartnerSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class DonationRequestViewSet(viewsets.ModelViewSet):
-    queryset = DonationRequest.objects.all()
-    serializer_class = DonationRequestSerializer
+    queryset = DonationRequest.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = DonationRequestSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class PartnerRequestViewSet(viewsets.ModelViewSet):
-    queryset = PartnerRequest.objects.all()
-    serializer_class = PartnerRequestSerializer
+    queryset = PartnerRequest.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = PartnerRequestSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
 class VolunteerRequestViewSet(viewsets.ModelViewSet):
-    queryset = VolunteerRequest.objects.all()
-    serializer_class = VolunteerRequestSerializer
-    permission_classes = [AllowAny]
-
-
-class HeroSlideViewSet(viewsets.ModelViewSet):
-    queryset = HeroSlide.objects.all()
-    serializer_class = HeroSlideSerializer
+    queryset = VolunteerRequest.objects.all()  # ← ЭТО ДОЛЖНО БЫТЬ
+    serializer_class = VolunteerRequestSerializer  # ← ЭТО ДОЛЖНО БЫТЬ
     permission_classes = [AllowAny]
 
 
