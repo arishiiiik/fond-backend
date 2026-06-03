@@ -19,7 +19,6 @@ router.register(r'partners', views.PartnerViewSet)
 router.register(r'donation-requests', views.DonationRequestViewSet)
 router.register(r'partner-requests', views.PartnerRequestViewSet)
 router.register(r'volunteer-requests', views.VolunteerRequestViewSet)
-router.register(r'hero-slides', views.HeroSlideViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
