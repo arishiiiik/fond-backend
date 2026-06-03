@@ -21,10 +21,10 @@ from .serializers import (
 )
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    permission_classes = [AllowAny]
-    lookup_field = "slug"
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
 class TeamMemberViewSet(viewsets.ModelViewSet):

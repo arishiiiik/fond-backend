@@ -34,18 +34,21 @@ class ProjectGallerySerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    gallery = ProjectGallerySerializer(many=True, read_only=True)
     image_url = serializers.SerializerMethodField()
-    status_display = serializers.CharField(source='get_status_display', read_only=True)
-    
     class Meta:
         model = Project
         fields = '__all__'
-    
     def get_image_url(self, obj):
+        request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url') and obj.image.url:
+            if request:
+                return request.build_absolute_uri(obj.image.url)
             return obj.image.url
-        return obj.image_url or None
+        if obj.image_url:
+            if obj.image_url.startswith('/') and request:
+                return request.build_absolute_uri(obj.image_url)
+            return obj.image_url
+        return None
 
 
 class TeamMemberSerializer(serializers.ModelSerializer):
