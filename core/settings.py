@@ -4,14 +4,12 @@ import dj_database_url
 from dotenv import load_dotenv  # ← ДОБАВЬТЕ ЭТУ СТРОКУ
 
 # Загружаем переменные из .env файла
-load_dotenv()  # ← ДОБАВЬТЕ ЭТУ СТРОКУ
+load_dotenv() 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-p5m_4)3%_(x8o#aua60)=9gtypyq-31&u8xynmlr2)fij_=g5d')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.onrender.com').split(',')
@@ -27,8 +25,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'cloudinary_storage',
     'cloudinary',
+    'cloudinary_storage',
     'api',
 ]
 
@@ -67,16 +65,32 @@ TEMPLATES = [
 #     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '873245894789337'),
 #     'API_SECRET': os.environ.get('EfTjBGbGeKzFxoa4mBEgXAM0EyQ')
 # }
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),   
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),         
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),   
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),   
+#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),         
+#     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),   
+# }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+
 # Media URL (для ссылок)
-# MEDIA_URL = '/media/'  # Cloudinary будет подставлять свои URL
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
